@@ -32,6 +32,18 @@ class RRuleTest(WarningTestMixin, unittest.TestCase):
 
         self.assertEqual(list(rule), list(rrulestr_rrule))
 
+    def testStrDtstartAmercianewyork(self):
+        rr_str = (
+          'DTSTART;TZID=America/New_York:19970105T083000\nRRULE:FREQ=YEARLY;INTERVAL=2'
+        )
+        self.assertEqual(str(rrulestr(rr_str)), rr_str)
+
+    def testStrDtstartUseastern(self):
+        rr_str = (
+          'DTSTART;TZID=US/Eastern:19970105T083000\nRRULE:FREQ=YEARLY;INTERVAL=2'
+        )
+        self.assertEqual(str(rrulestr(rr_str)), rr_str)
+
     def testStrAppendRRULEToken(self):
         # `_rrulestr_reverse_test` does not check if the "RRULE:" prefix
         # property is appended properly, so give it a dedicated test

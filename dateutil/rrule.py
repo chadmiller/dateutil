@@ -706,7 +706,15 @@ class rrule(rrulebase):
         output = []
         h, m, s = [None] * 3
         if self._dtstart:
-            output.append(self._dtstart.strftime('DTSTART:%Y%m%dT%H%M%S'))
+            dts = 'DTSTART'
+            if self._tzinfo:
+                dts += ';TZID='
+                try:
+                    dts += ("/".join(self._tzinfo._filename.rsplit("/", 2)[1:]))
+                except AttributeError:
+                    dts += self._tzinfo._name
+            dts += self._dtstart.strftime(':%Y%m%dT%H%M%S')
+            output.append(dts)
             h, m, s = self._dtstart.timetuple()[3:6]
 
         parts = ['FREQ=' + FREQNAMES[self._freq]]
