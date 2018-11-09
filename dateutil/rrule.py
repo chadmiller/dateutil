@@ -459,7 +459,7 @@ class rrule(rrulebase):
 
         if self._dtstart and self._until:
             if self._dtstart.tzinfo is not None:
-                if self._until.tzinfo is not None
+                if self._until.tzinfo is not None:
                     if self._dtstart.tzinfo != self._until.tzinfo:
                         raise ValueError("dtsart and until both have timezones and they're not equal")
 
