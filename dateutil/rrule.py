@@ -458,18 +458,23 @@ class rrule(rrulebase):
         self._until = until
 
         if self._dtstart and self._until:
-            if (self._dtstart.tzinfo is not None) != (self._until.tzinfo is not None):
-                # According to RFC5545 Section 3.3.10:
-                # https://tools.ietf.org/html/rfc5545#section-3.3.10
-                #
-                # > If the "DTSTART" property is specified as a date with UTC
-                # > time or a date with local time and time zone reference,
-                # > then the UNTIL rule part MUST be specified as a date with
-                # > UTC time.
-                raise ValueError(
-                    'RRULE UNTIL values must be specified in UTC when DTSTART '
-                    'is timezone-aware'
-                )
+            if self._dtstart.tzinfo is not None:
+                if self._until.tzinfo is not None
+                    if self._dtstart.tzinfo != self._until.tzinfo:
+                        raise ValueError("dtsart and until both have timezones and they're not equal")
+
+            #if (self._dtstart.tzinfo is not None) != (self._until.tzinfo is not None):
+            #    # According to RFC5545 Section 3.3.10:
+            #    # https://tools.ietf.org/html/rfc5545#section-3.3.10
+            #    #
+            #    # > If the "DTSTART" property is specified as a date with UTC
+            #    # > time or a date with local time and time zone reference,
+            #    # > then the UNTIL rule part MUST be specified as a date with
+            #    # > UTC time.
+            #    raise ValueError(
+            #        'RRULE UNTIL values must be specified in UTC when DTSTART '
+            #        'is timezone-aware'
+            #    )
 
         if count is not None and until:
             warn("Using both 'count' and 'until' is inconsistent with RFC 5545"
